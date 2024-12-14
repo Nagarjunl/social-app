@@ -59,7 +59,7 @@ export const sessionMiddleWare = session({
 });
 server.headersTimeout = 5000;
 server.requestTimeout = 10000;
-app.set("trust proxy", true);
+app.set("trust proxy", 1);
 app.use(sessionMiddleWare);
 
 app.use(cors());
@@ -76,7 +76,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(apiLimiter);
 app.use("/api", globalRouter);
 
-app.use("/api/auth", authRouter);
+app.use("/api/auth", authRateLimiter, authRouter);
 
 app.use("/api/services", blockJWT, protect, services);
 app.use("/api/user", blockJWT, protect, user);
