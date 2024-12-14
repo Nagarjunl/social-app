@@ -24,7 +24,7 @@ import redis from "redis";
 import { createClient } from "redis";
 
 let redisClient = createClient({
-  password: process.env.REDIS_PASSWORD,
+  // password: process.env.REDIS_PASSWORD,
   socket: {
     host: process.env.REDIS_HOST,
     port: Number(process.env.REDIS_PORT),
@@ -76,7 +76,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(apiLimiter);
 app.use("/api", globalRouter);
 
-app.use("/api/auth", authRateLimiter, authRouter);
+app.use("/api/auth", authRouter);
 
 app.use("/api/services", blockJWT, protect, services);
 app.use("/api/user", blockJWT, protect, user);
